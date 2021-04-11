@@ -21,10 +21,13 @@
 ; ~ 126
 
     %macro binary_op 1
-        pop     r9
+        ;pop     r9
+        ;pop     r8
+        ;%1      r8, r9
+        ;push    r8
+        ; TODO zrobić tak w innych miejscach!!!
         pop     r8
-        %1      r8, r9
-        push    r8
+        %1      [rsp], r8
     %endmacro
 
     global  notec
@@ -55,41 +58,41 @@ rec_char:                       ; rozpoznaje wczytany znak
     ; TODO czy mogę zamiast kodu ASCII wpisać np. 'W'?
     test    edx, edx    ; \0
     jz      exit
-    cmp     edx, 38     ; &
+    cmp     edx, '&'
     je      case_and
-    cmp     edx, 42     ; *
+    cmp     edx, '*'
     je      case_mul
-    cmp     edx, 43     ; +
+    cmp     edx, '+'
     je      case_add
-    cmp     edx, 45     ; -
-    je      case_sub
-    cmp     edx, 57     ; 0-9
+    cmp     edx, '-'
+    je      case_neg
+    cmp     edx, '9'
     jle     digit_0_9
-    cmp     edx, 61     ; =
+    cmp     edx, '='
     je      case_set_digit_mode
-    cmp     edx, 70     ; A-F
+    cmp     edx, 'F'
     jle     digit_A_F
-    cmp     edx, 78     ; N
+    cmp     edx, 'N'
     je      case_push_N
-    cmp     edx, 87     ; W
+    cmp     edx, 'W'
     je      TODO
-    cmp     edx, 88     ; X
+    cmp     edx, 'X'
     je      case_swap_two_on_top
-    cmp     edx, 89     ; Y
+    cmp     edx, 'Y'
     je      case_duplicate_top
-    cmp     edx, 90     ; Z
+    cmp     edx, 'Z'
     je      case_remove_top
-    cmp     edx, 94     ; ^
+    cmp     edx, '^'
     je      case_xor
-    cmp     edx, 102    ; a-f
+    cmp     edx, 'f'
     jle     digit_a_f
-    cmp     edx, 103    ; g
+    cmp     edx, 'g'
     je      case_call_debug
-    cmp     edx, 110    ; n
+    cmp     edx, 'n'
     je      case_push_instance_number
-    cmp     edx, 124    ; |
+    cmp     edx, '|'
     je      case_or
-    cmp     edx, 126    ; ~
+    cmp     edx, '~'
     je      case_not
 
 digit_0_9:
@@ -135,13 +138,12 @@ case_add:
     mov     r10d, 0         ; przejdź w tryb wczytywania cyfry
     jmp     next             ; kontynuuj wczytywanie
 
-case_sub:
-    binary_op sub
+case_neg:
+    neg     qword [rsp]
     mov     r10d, 0         ; przejdź w tryb wczytywania cyfry
     jmp     next             ; kontynuuj wczytywanie
 
 case_set_digit_mode:
-    mov     r10d, 0
     mov     r10d, 0         ; przejdź w tryb wczytywania cyfry
     jmp     next             ; kontynuuj wczytywanie
 
@@ -171,7 +173,6 @@ case_remove_top:
 
 case_xor:
     binary_op xor
-    push    r8
     mov     r10d, 0         ; przejdź w tryb wczytywania cyfry
     jmp     next             ; kontynuuj wczytywanie
 
@@ -210,7 +211,6 @@ case_push_instance_number:
 
 case_or:
     binary_op   or
-    push        r8
     mov     r10d, 0         ; przejdź w tryb wczytywania cyfry
     jmp     next             ; kontynuuj wczytywanie
 

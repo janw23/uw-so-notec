@@ -14,7 +14,7 @@ volatile unsigned wait = 1;
 
 // Startujemy co najwyżej jedno obliczenie calc_1
 // i parzystą liczbę obliczeń calc_2.
-static const char calc_1[] = "6N8ZXab=12-+3*~FFF&cDe09|g";
+static const char calc_1[] = "ng";// todo "6N8ZXab=12-+3*~FFF&cDe09|g";
 static const char calc_2[] = "5=6+";// TODO "nY1^W";
 static const uint64_t result_1 = (~((0xab - 0x12) * 3) & 0xfff) | 0xcde09;
 
@@ -27,9 +27,10 @@ int64_t debug(uint32_t n, uint64_t *stack_pointer) {
 //  // Usuwamy wynik ze stosu.
 //  return 1;
     fprintf(stderr, "called debug\n"); // todo RT
-    for (int i = 0; i < 10; i++) {   // todo RT
+    for (int i = 0; i < 5; i++) {   // todo RT
         fprintf(stderr, "stack[%d] = %lu\n", i, stack_pointer[i]);
     }
+
     return 0;
 }
 
