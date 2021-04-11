@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/uw_so_notec.dir/example.c.o CMakeFiles/uw_so_notec.dir/notec.c.o CMakeFiles/uw_so_notec.dir/test_notec.c.o CMakeFiles/uw_so_notec.dir/notec_sim.c.o  -o uw_so_notec 

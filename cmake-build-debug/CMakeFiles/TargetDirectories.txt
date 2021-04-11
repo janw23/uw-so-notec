@@ -1,0 +1,3 @@
+/home/janw23/Workspace/MIMUW/uw-so-notec/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/janw23/Workspace/MIMUW/uw-so-notec/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/janw23/Workspace/MIMUW/uw-so-notec/cmake-build-debug/CMakeFiles/uw_so_notec.dir
